@@ -139,7 +139,7 @@
     {
       "name": "[variables('appName')]",
       "type": "Microsoft.Web/sites",
-      "apiVersion": "2018-11-01",
+      "apiVersion": "2022-03-01",
       "location": "[resourceGroup().location]",
       "kind": "app",
       "dependsOn": [
@@ -147,22 +147,10 @@
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
       ],
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]"
-      },
-      "resources": [
-        {
-          "name": "virtualNetwork",
-          "type": "config",
-          "apiVersion": "2018-11-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('appName'))]"
-          ],
-          "properties": {
-            "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName2'))]",
-            "swiftSupported": true
-          }
-        }
-      ]
+        "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]",
+        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName2'))]",
+        "vnetRouteAllEnabled": true
+      }
     },
 
     // Storage Account -------------
@@ -198,4 +186,4 @@
     }  
   ],
   "outputs": {}
-}
+} 
